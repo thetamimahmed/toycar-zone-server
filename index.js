@@ -71,6 +71,23 @@ async function run() {
         res.send(result)
     })
 
+    //put toy car
+    app.put("/toys/:id", async(req, res)=>{
+        const id =req.params.id;
+        const toy = req.body;
+        const filter = {_id: new ObjectId(id)}
+        const updateDoc = {
+            $set: {
+              price: toy.price,
+              quantity: toy.quantity,
+              description: toy.description
+            },
+          };
+        const result = await toyCollection.updateOne(filter, updateDoc)
+        res.send(result)
+    })
+
+
     //get toy by searchText
     app.get("/getToysBySearch/:text", async(req,res)=>{
         const text = req.params.text;
