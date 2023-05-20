@@ -33,6 +33,10 @@ async function run() {
         res.send(result)
     })
 
+    //create index
+    const indexKeys = { name: 1 };
+    const indexOptions = { name: "toyName" };
+    const result = await toyCollection.createIndex(indexKeys, indexOptions);
 
     //get single toy
     app.get("/toys/:id", async(req, res)=>{
@@ -65,6 +69,18 @@ async function run() {
         const toy = req.body;
         const result = await toyCollection.insertOne(toy)
         res.send(result)
+    })
+
+    //get toy by searchText
+    app.get("/getToysBySearch/:text", async(req,res)=>{
+        const text = req.params.text;
+         const result = await toyCollection.find({
+          $or: [
+            { name: { $regex: text, $options: "i" } }
+          ],
+        })
+        .toArray();
+      res.send(result);
     })
 
     // Send a ping to confirm a successful connection
