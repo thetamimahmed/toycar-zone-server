@@ -67,10 +67,13 @@ async function run() {
     //get car by email
     app.get("/myToy", async(req, res)=>{
         let query = {}
+        let sort = {}
         if(req.query?.email){
             query = {email: req.query.email}
+            sort = {price: req.query.sort == 'true' ? 1 : -1}
+            console.log(query, sort)
         }
-        const result = await toyCollection.find(query).toArray()
+        const result = await toyCollection.find(query).sort(sort).toArray()
         res.send(result)
     })
 
