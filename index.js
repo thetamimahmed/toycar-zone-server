@@ -28,12 +28,12 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    client.connect((err)=>{
-        if(err){
-            console.error(err);
-            return;
-        }
-    });
+    // client.connect((err)=>{
+    //     if(err){
+    //         console.error(err);
+    //         return;
+    //     }
+    // });
 
     const toyCollection = client.db("toyCarZoneDB").collection("toyCar");
     //get all toyCar
