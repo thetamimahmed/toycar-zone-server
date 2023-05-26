@@ -43,9 +43,9 @@ async function run() {
     })
 
     //create index
-    const indexKeys = { name: 1 };
-    const indexOptions = { name: "toyName" };
-    const result = await toyCollection.createIndex(indexKeys, indexOptions);
+    // const indexKeys = { name: 1 };
+    // const indexOptions = { name: "toyName" };
+    // const result = await toyCollection.createIndex(indexKeys, indexOptions);
 
     //get single toy
     app.get("/toys/:id", async(req, res)=>{
@@ -77,6 +77,7 @@ async function run() {
         res.send(result)
     })
 
+
     //post toy car
     app.post("/toys", async(req, res)=>{
         const toy = req.body;
@@ -101,16 +102,12 @@ async function run() {
     })
 
 
-    //get toy by searchText
+    //get toys by searchText
     app.get("/getToysBySearch/:text", async(req,res)=>{
         const text = req.params.text;
-         const result = await toyCollection.find({
-          $or: [
-            { name: { $regex: text, $options: "i" } }
-          ],
-        })
-        .toArray();
-      res.send(result);
+        const query = {name : text};
+        const result = await toyCollection.find(query).toArray()
+        res.send(result)
     })
 
     //delete single toy
